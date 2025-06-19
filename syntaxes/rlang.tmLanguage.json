@@ -1,20 +1,50 @@
 {
 	"$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
 	"name": "rlang",
+	"scopeName": "source.mod",
 	"patterns": [
 		{
 			"include": "#keywords"
 		},
 		{
 			"include": "#strings"
+		},
+		{
+			"include": "#functions"
+		},
+		{
+			"include": "#comments"
+		},
+		{
+			"include": "#operators"
+		},
+		{
+			"include": "#types"
+		},
+		{
+			"include": "#di_do_prefix"
+		},
+		{
+			"include": "#numbers"
+		},
+		{
+			"include": "#scope_functions"
+		},
+		{
+			"include": "#booleans"
+		},
+		{
+			"include": "#goto_keyword"
 		}
 	],
 	"repository": {
 		"keywords": {
-			"patterns": [{
-				"name": "keyword.control.rlang",
-				"match": "\\b(if|while|for|return)\\b"
-			}]
+			"patterns": [
+				{
+					"name": "keyword.control.rlang",
+					"match": "(?i)\\b(if|else|else if|endif|while|for|return|endwhile|Goto|ClkStart|ClkStop|ClkReset|MoveL|SetDO|wait|GLOBAL PROC|ENDPROC)\\b"
+				}
+			]
 		},
 		"strings": {
 			"name": "string.quoted.double.rlang",
@@ -26,7 +56,104 @@
 					"match": "\\\\."
 				}
 			]
+		},
+		"functions": {
+			"patterns": [
+				{
+					"name": "entity.name.function.rlang",
+					"match": "\\b[A-Za-z_][A-Za-z0-9_]*\\s*(?=\\()"
+				}
+			]
+		},
+		"comments": {
+			"patterns": [
+				{
+					"name": "comment.line.double-slash.rlang",
+					"begin": "//",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.definition.comment.rlang"
+						}
+					},
+					"end": "$",
+					"patterns": []
+				},
+				{
+					"name": "comment.block.rlang",
+					"begin": "/\\*",
+					"end": "\\*/",
+					"beginCaptures": {
+						"0": {
+							"name": "punctuation.definition.comment.rlang"
+						}
+					},
+					"patterns": []
+				}
+			]
+		},
+		"operators": {
+			"patterns": [
+				{
+					"name": "keyword.operator.rlang",
+					"match": "[+\\-*/%=<>!&|]+"
+				}
+			]
+		},
+		"types": {
+			"patterns": [
+				{
+					"name": "storage.type.rlang",
+					"match": "\\b(int|float|char|bool|double|void|string)\\b"
+				}
+			]
+		},
+		"di_do_prefix": {
+			"patterns": [
+				{
+					"name": "variable.di-do.rlang",
+					"match": "\\b(DI|DO)\\d+(_\\d+)*\\b"
+				}
+			]
+		},
+		"numbers": {
+			"patterns": [
+				{
+					"name": "constant.numeric.rlang",
+					"match": "\\b\\d+(\\.\\d+)?([eE][+-]?\\d+)?\\b"
+				}
+			]
+		},
+		"scope_functions": {
+			"patterns": [
+				{
+					"name": "entity.name.function.scope.rlang",
+					"match": "\\b[A-Za-z_][A-Za-z0-9_]*:\\b"
+				},
+				{
+					"name": "entity.name.function.scope.rlang",
+					"match": "\\b[A-Za-z_][A-Za-z0-9_]*\\b(?=\\s*\\()"
+				},
+				{
+					"name": "entity.name.function.scope.rlang",
+					"match": "\\b[A-Za-z_][A-Za-z0-9_]*\\b(?=\\s*:)\\s*"
+				}
+			]
+		},
+		"booleans": {
+			"patterns": [
+				{
+					"name": "constant.language.boolean.rlang",
+					"match": "\\b(true|false)\\b"
+				}
+			]
+		},
+		"goto_keyword": {
+			"patterns": [
+				{
+					"name": "entity.name.function.goto.rlang",
+					"match": "\\bGoto\\s+([A-Za-z_][A-Za-z0-9_]*)\\b"
+				}
+			]
 		}
-	},
-	"scopeName": "source.mod"
+	}
 }
