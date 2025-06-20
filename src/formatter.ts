@@ -70,6 +70,10 @@ export function formatRLang(code: string): string {
       (_, left, op, right) => `${left} ${op} ${right}`
     );
 
+    // 去除函数调用后多余空格的分号
+    content = content.replace(/\)\s+;/g, ");");
+
+
     // 恢复注释
     if (comment) {
       content += ' ' + comment.replace(/^\/\/\s*/, '// ');
