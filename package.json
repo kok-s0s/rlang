@@ -1,8 +1,13 @@
 {
   "name": "rlang",
   "displayName": "RLang",
-  "description": "robot language support",
-  "version": "0.0.1",
+  "description": "Robot language (RLang) support with syntax highlight and formatter",
+  "version": "1.0.0",
+  "publisher": "kok-s0s",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kok-s0s/rlang"
+  },
   "engines": {
     "vscode": "^1.101.0"
   },
@@ -17,12 +22,16 @@
     "@types/vscode": "^1.101.0",
     "typescript": "^5.8.3"
   },
+  "activationEvents": [
+    "onLanguage:rlang",
+    "onCommand:rlang.formatDocument"
+  ],
   "contributes": {
     "languages": [
       {
         "id": "rlang",
         "aliases": [
-          "rlang",
+          "RLang",
           "rlang"
         ],
         "extensions": [
@@ -36,6 +45,12 @@
         "language": "rlang",
         "scopeName": "source.mod",
         "path": "./syntaxes/rlang.tmLanguage.json"
+      }
+    ],
+    "commands": [
+      {
+        "command": "rlang.formatDocument",
+        "title": "Format RLang Document"
       }
     ]
   }
