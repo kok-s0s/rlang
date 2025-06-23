@@ -2,7 +2,7 @@
   "name": "rlang",
   "displayName": "RLang",
   "description": "Robot language (RLang) support with syntax highlight and formatter",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "publisher": "kok-s0s",
   "repository": {
     "type": "git",
@@ -51,6 +51,43 @@
       {
         "command": "rlang.formatDocument",
         "title": "Format RLang Document"
+      }
+    ],
+    "contributes": {
+      "configuration": {
+        "type": "object",
+        "title": "RLang 设置",
+        "properties": {
+          "rlang.customHighlightedVariables": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string",
+                  "description": "变量名"
+                },
+                "color": {
+                  "type": "string",
+                  "description": "十六进制颜色代码，例如 #ff0000",
+                  "pattern": "^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$"
+                }
+              },
+              "required": [
+                "name"
+              ]
+            },
+            "default": [],
+            "description": "自定义需要高亮的变量名及其对应颜色"
+          }
+        }
+      }
+    },
+    "semanticTokenTypes": [
+      {
+        "id": "customVariable",
+        "superType": "variable",
+        "description": "用户自定义变量"
       }
     ]
   }

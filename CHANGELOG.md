@@ -1,9 +1,13 @@
-# Change Log
+# Changelog
 
-All notable changes to the "rlang" extension will be documented in this file.
+## [1.0.2] - 2025-06-23
 
-Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
+### Added
 
-## [Unreleased]
+- Support for user-defined variables with custom highlight colors.
 
-- Initial release
+## [1.0.0] - 2025-06-20
+
+### Added
+
+- Initial release with syntax highlighting and code formatting for Robot Language (RLang).
