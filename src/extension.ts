@@ -2,6 +2,7 @@
 
 import * as vscode from 'vscode';
 import { formatRLang } from './formatter';
+import { RLangDocumentSymbolProvider } from './symbolProvider';
 
 interface CustomVar {
   name: string;
@@ -51,6 +52,14 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.workspace.onDidChangeTextDocument(() => {
       updateCustomVariableDecorations();
     })
+  );
+
+  // 6. 注册 DocumentSymbolProvider
+  context.subscriptions.push(
+    vscode.languages.registerDocumentSymbolProvider(
+      { language: 'rlang' },
+      new RLangDocumentSymbolProvider()
+    )
   );
 }
 

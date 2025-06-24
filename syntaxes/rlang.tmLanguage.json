@@ -42,7 +42,7 @@
 			"patterns": [
 				{
 					"name": "keyword.control.rlang",
-					"match": "(?i)\\b(if|else|else if|endif|while|for|return|endwhile|Goto|ClkStart|ClkStop|ClkReset|MoveL|SetDO|wait|GLOBAL PROC|ENDPROC)\\b"
+					"match": "(?i)\\b(if|else|else if|endif|while|for|return|endwhile|ClkStart|ClkStop|ClkReset|MoveL|SetDO|wait|GLOBAL PROC|ENDPROC)\\b"
 				}
 			]
 		},
@@ -127,11 +127,11 @@
 			"patterns": [
 				{
 					"name": "entity.name.function.scope.rlang",
-					"match": "\\b[A-Za-z_][A-Za-z0-9_]*:\\b"
+					"match": "\\b[A-Za-z_][A-Za-z0-9_]*:\\s*;?"
 				},
 				{
 					"name": "entity.name.function.scope.rlang",
-					"match": "\\b[A-Za-z_][A-Za-z0-9_]*\\b(?=\\s*\\()"
+					"match": "\\b[A-Za-z_][A-Za-z0-9_]*\\s*(?=\\()"
 				},
 				{
 					"name": "entity.name.function.scope.rlang",
@@ -150,8 +150,16 @@
 		"goto_keyword": {
 			"patterns": [
 				{
-					"name": "entity.name.function.goto.rlang",
-					"match": "\\bGoto\\s+([A-Za-z_][A-Za-z0-9_]*)\\b"
+					"name": "meta.goto.statement.rlang",
+					"match": "\\b(Goto)\\s+([A-Za-z_][A-Za-z0-9_]*)",
+					"captures": {
+						"1": {
+							"name": "keyword.control.rlang"
+						},
+						"2": {
+							"name": "entity.name.function.scope.rlang"
+						}
+					}
 				}
 			]
 		}

@@ -2,7 +2,8 @@
   "name": "rlang",
   "displayName": "RLang",
   "description": "Robot language (RLang) support with syntax highlight and formatter",
-  "version": "1.0.3",
+  "icon": "icon.png",
+  "version": "1.0.4",
   "publisher": "kok-s0s",
   "repository": {
     "type": "git",

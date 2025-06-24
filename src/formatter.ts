@@ -5,6 +5,7 @@ export function formatRLang(code: string): string {
   const formatted: string[] = [];
   let indentLevel = 0;
   let blankLineCount = 0;
+  let extraIndentAfterLabel = false; // 新增：处理 label 后缩进
 
   const increaseKeywords = ['GLOBAL PROC', 'IF', 'WHILE', 'if', 'while'];
   const decreaseKeywords = ['ENDPROC', 'ENDIF', 'ENDWHILE', 'endif', 'endwhile'];
@@ -20,9 +21,19 @@ export function formatRLang(code: string): string {
       if (blankLineCount <= 1) {
         formatted.push('');
       }
+      extraIndentAfterLabel = false; // 空行终止 label 块
       continue;
     } else {
       blankLineCount = 0;
+    }
+
+    // 检查是否为 label 行（例如 endL:;）
+    const isLabelLine = /^[A-Za-z_]\w*:\s*;?$/.test(trimmedLine);
+    if (isLabelLine) {
+      const labelIndent = '    '.repeat(indentLevel);  // 当前缩进层级
+      formatted.push(labelIndent + trimmedLine);
+      extraIndentAfterLabel = true;  // 启用 label 后额外缩进
+      continue;
     }
 
     // 减少缩进
@@ -30,10 +41,21 @@ export function formatRLang(code: string): string {
       indentLevel = Math.max(0, indentLevel - 1);
     }
 
+    // 同级结构判断（如 else）
     const isSameLevel = sameLevelKeywords.some(k => upper.startsWith(k));
-    const effectiveIndent = Math.max(0, isSameLevel ? indentLevel - 1 : indentLevel);
-    const indent = '    '.repeat(effectiveIndent);
+    let effectiveIndent = Math.max(0, isSameLevel ? indentLevel - 1 : indentLevel);
 
+    // 如果处于 label 块之后，增加一级缩进
+    if (extraIndentAfterLabel) {
+      effectiveIndent += 1;
+
+      // 如果当前行是控制结构，结束 label 缩进（如 IF WHILE）
+      if (increaseKeywords.some(k => upper.startsWith(k)) || decreaseKeywords.some(k => upper.startsWith(k))) {
+        extraIndentAfterLabel = false;
+      }
+    }
+
+    const indent = '    '.repeat(effectiveIndent);
     let content = trimmedLine;
 
     // 注释处理
@@ -72,7 +94,6 @@ export function formatRLang(code: string): string {
 
     // 去除函数调用后多余空格的分号
     content = content.replace(/\)\s+;/g, ");");
-
 
     // 恢复注释
     if (comment) {
